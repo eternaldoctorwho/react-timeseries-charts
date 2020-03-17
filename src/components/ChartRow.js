@@ -160,7 +160,7 @@ export default class ChartRow extends React.Component {
         this.mounted = false;
     }
     render() {
-        const { paddingLeft, paddingRight } = this.props;
+        const { paddingLeft, paddingRight, useClipPath = true } = this.props;
 
         const axes = []; // Contains all the yAxis elements used in the render
         const chartList = []; // Contains all the Chart elements used in the render
@@ -381,7 +381,7 @@ export default class ChartRow extends React.Component {
 
         const charts = (
             <g transform={chartTransform} key="event-rect-group">
-                <g key="charts" clipPath={this.state.clipPathURL}>
+                <g key="charts" clipPath={useClipPath && this.state.clipPathURL}>
                     {chartList}
                 </g>
             </g>
@@ -544,6 +544,11 @@ ChartRow.propTypes = {
      * Specify the styling of the box behind chart row's title
      */
     titleBoxStyle: PropTypes.object,
+
+    /**
+     * Use a clip path to mask the chart row
+     */
+    useClipPath: PropTypes.bool,
 
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     leftAxisWidths: PropTypes.arrayOf(PropTypes.number),
